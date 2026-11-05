@@ -1,0 +1,102 @@
+{
+    "layer": "top",
+    "passthrough" : false,
+    "input-method" : true,
+    "position" : "top",
+    "height" : 34,
+
+    "modules-left" :[
+	"hyprland/workspaces"
+    ],
+
+    "modules-center" :[
+	"clock"
+    ],
+
+    "modules-right" : [
+	"idle_inhibitor",
+	"wireplumber",
+	"network",
+	"battery",
+	"tray"
+    ],
+
+    "clock": {
+	 "format": "{:%H:%M}",
+	 "format-alt": "{:%Y-%m-%d}",
+ 	 "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "idle_inhibitor": {
+	"format": "{icon}",
+	"format-icons": {
+	    "activated": "  Awake",
+	    "deactivated": "  Sleep"
+	}
+    },
+
+
+    "wireplumber": {
+	"format": "{icon} {volume}%",
+	"format-muted": "   Muted",
+	"on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+	"on-click-right": "pavucontrol",
+	"on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+	"on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
+	"scroll-step": 5,
+        "format-icons": {
+            "headphone": "\uF025",   // Headphones icon
+            "hands-free": "\uF2A5",  // Handset/Bluetooth icon
+            "headset": "\uF2A5",     // Headset icon
+            "phone": "\uF095",       // Phone icon
+            "portable": "\uF10B",    // Mobile icon
+            "car": "\uF1B9",         // Car icon
+            "default": [
+                "\uF027",            // Low Volume (Speaker with 1 wave)
+                "\uF028"             // High Volume (Speaker with full waves)
+            ]
+        }
+    },
+
+    "network": {
+	"interface": "wlp3s0",
+        "format-wifi": "  {essid} ({signalStrength}%)",
+        "format-ethernet": "{ipaddr}",
+        "format-disconnected": "Disconnected",
+        "tooltip-format-wifi": "  {essid}\n{ipaddr}",
+        "tooltip-format-ethernet": "{ifname}\n{ipaddr}",
+        "on-click": "kitty -e nmtui"
+    },
+
+    "battery": {
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": "\uF008E {capacity}%",
+        "format-plugged": "\uF008E {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-icons": [
+            "\uF244", // 0-20% Critical/Empty (Battery Empty)
+            "\uF243", // 21-40% Low (Battery Quarter)
+            "\uF242", // 41-60% Medium (Battery Half)
+            "\uF241", // 61-80% High (Battery Three-Quarters)
+            "\uF240"  // 81-100% Full (Battery Full)
+        ]
+    },
+
+
+    "tray": {
+	"icon-size": 16,
+	"spacing": 10,
+	"show-passive-items": true
+    }
+
+}
+
+
+
+
+}
