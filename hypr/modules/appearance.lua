@@ -93,8 +93,8 @@ hl.config({
     },
 
 -- Add these as completely standalone lines in your hyprland.lua
-hl.layer_rule({ match = { namespace = "wofi" }, blur = true, ignore_alpha = 0.5 }),
-hl.layer_rule({ match = { namespace = "launcher" }, blur = true, ignore_alpha = 0.5 }),
+hl.layer_rule({ match = { namespace = "wofi" }, blur = true, ignore_alpha = 0.70 }),
+hl.layer_rule({ match = { namespace = "launcher" }, blur = true, ignore_alpha = 0.70 }),
 
 -- Fix for your waybar too
 hl.layer_rule({ match = { namespace = "waybar" }, blur = true, ignore_alpha = 0.5 })

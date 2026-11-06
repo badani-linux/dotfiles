@@ -16,6 +16,4 @@ local terminal	  = "kitty"
    hl.exec_cmd("hyprpaper")
    hl.exec_cmd("fcitx5 -d")
    hl.exec_cmd("dunst")
-   hl.exec_once("hypridle")
-   hl.bind("SUPER", "L", "exec", "loginctl lock-session")
  end)

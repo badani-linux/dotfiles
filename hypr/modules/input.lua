@@ -1,7 +1,3 @@
----------------
----- INPUT ----
----------------
-
 hl.config({
     input = {
         kb_layout  = "us",
@@ -15,15 +11,17 @@ hl.config({
         sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
 
         touchpad = {
-            natural_scroll = false,
+            natural_scroll = true,
         },
     },
 })
 
-hl.gesture({
-    fingers = 3,
-    direction = "horizontal",
-    action = "workspace"
+-- Added a scale velocity multiplier to make it ultra-sensitive
+hl.gesture({ 
+    fingers = 3, 
+    direction = "horizontal", 
+    action = "workspace", 
+    scale = 2.0 
 })
 
 -- Example per-device config
@@ -31,4 +29,13 @@ hl.gesture({
 hl.device({
     name        = "epic-mouse-v1",
     sensitivity = -0.5,
+})
+
+
+-- Replace "synaptics-touchpad" with your exact device name from hyprctl devices
+hl.device({
+    name = "synaptics-touchpad",
+    enabled = true,
+    tap_to_click = true,
+    natural_scroll = true
 })

@@ -97,18 +97,6 @@ window#waybar {
     border: none;             /* Strips out white bounding boxes */
 }
 
-
-/* Style for the workspace you are currently looking at */
-#workspaces button.active {
-    color: @mauve;
-    border-bottom: 2px solid @mauve;
-}
-
-/* Style when a workspace requires immediate attention */
-#workspaces button.urgent {
-    color: @red;
-}
-
 /* --- Idle Inhibitor Styling --- */
 #idle_inhibitor.activated {
     background-color: @maroon;
