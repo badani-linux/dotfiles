@@ -13,7 +13,7 @@
     border-radius: 0;
 }
 
-/* Make the main bar transparent so the module pills float beautifully */
+/* Make the main bar transparent so the module pills float */
 window#waybar {
     background-color: transparent;
 }
@@ -87,7 +87,6 @@ window#waybar {
     color: @red;
 }
 
-/* Custom Hover Color (Overrides the default white background) */
 /* Custom Hover Color (Force-overrides all default white system highlights) */
 #workspaces button:hover {
     background: @surface1;   /* Locks the background color to dark gray */
