@@ -92,8 +92,8 @@
             "critical": 15
         },
         "format": "{icon} {capacity}%",
-        "format-charging": "\uF008E {capacity}%",
-        "format-plugged": "\uF008E {capacity}%",
+        "format-charging": "\uF0E7 {capacity}%",
+        "format-plugged": "\uF0E7 {capacity}%",
         "format-alt": "{icon} {time}",
         "format-icons": [
             "\uF244", // 0-20% Critical/Empty (Battery Empty)
