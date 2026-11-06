@@ -34,6 +34,36 @@ window#waybar {
     border: 1px solid @surface1;   /* Subtle border for depth */
 }
 
+/* --- Hyprland Workspaces Styling --- */
+#workspaces button {
+    padding: 0 8px;
+    background-color: transparent;
+    font-size: 10px;             /* Clean, minimalist dot size */
+    box-shadow: none;
+    text-shadow: none;
+}
+
+/* Scales the active dot up slightly so it physically pops out */
+#workspaces button.active {
+    font-size: 13px;             
+}
+
+/* Forces the active workspace dot to turn Mauve when focused */
+#workspaces button.active label {
+    color: @mauve;
+}
+
+/* Style when a workspace requires immediate attention */
+#workspaces button.urgent label {
+    color: @red;
+}
+
+/* Custom Hover behavior */
+#workspaces button:hover label {
+    color: @sapphire;            /* Turns sapphire blue on cursor hover */
+}
+
+
 /* --- Clock Styling --- */
 #clock {
     color: @lavender; /* Clean pastel look for time */
