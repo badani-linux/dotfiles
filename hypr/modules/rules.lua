@@ -1,49 +1,59 @@
---------------------------------
----- WINDOWS AND WORKSPACES ----
---------------------------------
+-- =============================================================================
+-- Hyprland Window Rules (Lua Syntax)
+-- =============================================================================
 
--- See https://wiki.hypr.land/Configuring/Basics/Window-Rules/
--- and https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
-
--- Example window rules that are useful
-
-local suppressMaximizeRule = hl.window_rule({
-    -- Ignore maximize requests from all apps. You'll probably like this.
-    name  = "suppress-maximize-events",
-    match = { class = ".*" },
-
-    suppress_event = "maximize",
-})
--- suppressMaximizeRule:set_enabled(false)
-
+-- 1. Floating Terminal App (e.g., Kitty running nmtui from your Waybar)
 hl.window_rule({
-    -- Fix some dragging issues with XWayland
-    name  = "fix-xwayland-drags",
-    match = {
-        class      = "^$",
-        title      = "^$",
-        xwayland   = true,
-        float      = true,
-        fullscreen = false,
-        pin        = false,
+    name = "network-manager-float",
+    match = { 
+        class = "^(kitty)$",
+        title = "^(nmtui)$" 
     },
-
-    no_focus = true,
+    float = true,
+    center = true,
+    size = { 800, 500 }
 })
 
--- Layer rules also return a handle.
--- local overlayLayerRule = hl.layer_rule({
---     name  = "no-anim-overlay",
---     match = { namespace = "^my-overlay$" },
---     no_anim = true,
--- })
--- overlayLayerRule:set_enabled(false)
-
--- Hyprland-run windowrule
+-- 2. General Utility/System Floating Rules (e.g., Audio Control, File Choosers)
 hl.window_rule({
-    name  = "move-hyprland-run",
-    match = { class = "hyprland-run" },
-  
-    move  = "20 monitor_h-120",
+    name = "system-utilities-float",
+    match = { 
+        class = "^(pavucontrol|blueman-manager|org.gnome.FileRoller)$" 
+    },
     float = true,
+    center = true,
+    size = { 750, 550 }
+})
+
+-- 3. Slightly Mute Opacity on Background Windows (Complements your style sheet)
+-- This keeps your focused window crisp and dims background apps nicely
+hl.window_rule({
+    name = "global-inactive-dim",
+    match = { 
+        class = ".*" -- Matches everything
+    },
+    opacity = "1.0 0.90" -- Format: "active_opacity inactive_opacity"
+})
+
+-- 4. Open specific apps directly on chosen workspaces
+-- Matches your colored workspace dots!
+hl.window_rule({
+    name = "browser-workspace",
+    match = { class = "^(firefox)$" },
+    workspace = 2 -- Automatically opens Firefox on your second workspace dot
+})
+
+hl.window_rule({
+    name = "discord-workspace",
+    match = { class = "^(vesktop)$" },
+    workspace = 5 -- Opens Discord automatically on your fifth workspace dot
+})
+
+-- 5. PiP (Picture-in-Picture) Video Player Rules
+hl.window_rule({
+    name = "pip-video",
+    match = { title = "^(Picture-in-Picture)$" },
+    float = true,
+    pin = true, -- Shows up across all workspaces
+    move = { "100%-460", "100%-290" } -- Sticks it neat to the bottom right corner
 })

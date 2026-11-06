@@ -1,128 +1,102 @@
------------------------   
----- LOOK AND FEEL ----
------------------------
+-- =============================================================================
+-- Catppuccin Mocha Color Palette (Hex Strings mapped for Lua)
+-- =============================================================================
+local mocha = {
+    rosewater = "0xfff5e0dc",
+    flamingo  = "0xfff2cdcd",
+    pink      = "0xfff5c2e7",
+    mauve     = "0xffcba6f7",
+    red       = "0xfff38ba8",
+    maroon    = "0xffeba0ac",
+    peach     = "0xfffab387",
+    yellow    = "0xfff9e2af",
+    green     = "0xffa6e3a1",
+    teal      = "0xff94e2d5",
+    sky       = "0xff89dceb",
+    sapphire  = "0xff74c7ec",
+    blue      = "0xff89b4fa",
+    lavender  = "0xffb4befe",
+    text      = "0xffcdd6f4",
+    surface2  = "0xff585b70",
+    surface1  = "0xff45475a",
+    surface0  = "0xff313244",
+    base      = "0xff1e1e2e",
+    mantle    = "0xff181825",
+    crust     = "0xff11111b"
+}
 
--- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
+
 hl.config({
+    -- =============================================================================
+    -- General Layout Settings
+    -- =============================================================================
     general = {
-        gaps_in  = 5,
-        gaps_out = 20,
-
+        gaps_in = 4,   -- Gaps between windows
+        gaps_out = 8,  -- Outer margins (Gives your floating Waybar breathing room)
         border_size = 2,
-
+        
+        -- Multi-color gradient active border running from Mauve to Sapphire
         col = {
-            active_border   = { colors = {"rgba(33ccffee)", "rgba(00ff99ee)"}, angle = 45 },
-            inactive_border = "rgba(595959aa)",
+            active_border = {
+                colors = { mocha.mauve, mocha.sapphire },
+                angle = 45
+            },
+            inactive_border = mocha.surface0,
         },
-
-        -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
-        resize_on_border = false,
-
-        -- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
-        allow_tearing = false,
-
         layout = "dwindle",
     },
 
+    -- =============================================================================
+    -- Window Decorations and Depth Shadows
+    -- =============================================================================
     decoration = {
-        rounding       = 1,
-        rounding_power = 1,
-
-        -- Change transparency of focused and unfocused windows
-        active_opacity   = 1.0,
-        inactive_opacity = 1.0,
-
+        rounding = 1,          -- Matches your 8px Waybar pill corners
+        active_opacity = 1.0,
+        inactive_opacity = 0.92, -- Subtle opacity dimming on background windows
+        
         shadow = {
-            enabled      = true,
-            range        = 4,
+            enabled = true,
+            range = 10,
             render_power = 3,
-            color        = 0xee1a1a1a,
+            color = "rgba(17, 17, 27, 0.6)", -- Muted Catppuccin crust shadow
         },
-
+        
         blur = {
-            enabled   = true,
-            size      = 3,
-            passes    = 1,
-            vibrancy  = 0.1696,
+            enabled = true,
+            size = 5,
+            passes = 2,
+            new_optimizations = true,
+            ignore_opacity = true,
         },
     },
 
+    -- =============================================================================
+    -- Snappy Windows & Workspace Slide Transitions
+    -- =============================================================================
     animations = {
         enabled = true,
+        
+        -- Customize curves using table structures
+        bezier = {
+            { name = "fluent_curve", r1 = 0.16, r2 = 1, r3 = 0.3, r4 = 1 }
+        },
+        
+        -- Map animations directly to the custom bezier curve
+        animation = {
+            { name = "windows",      enabled = true, speed = 3.5, curve = "fluent_curve", style = "popin 80%" },
+            { name = "windowsOut",   enabled = true, speed = 3.0, curve = "fluent_curve", style = "popin 80%" },
+            { name = "border",       enabled = true, speed = 5.0, curve = "default" },
+            { name = "borderangle",  enabled = true, speed = 10.0, curve = "default" },
+            { name = "fade",         enabled = true, speed = 3.0, curve = "default" },
+            { name = "workspaces",   enabled = true, speed = 4.0, curve = "fluent_curve", style = "slide" },
+        }
     },
-})
 
--- Default curves and animations, see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Animations/
-hl.curve("easeOutQuint",   { type = "bezier", points = { {0.23, 1},    {0.32, 1}    } })
-hl.curve("easeInOutCubic", { type = "bezier", points = { {0.65, 0.05}, {0.36, 1}    } })
-hl.curve("linear",         { type = "bezier", points = { {0, 0},       {1, 1}       } })
-hl.curve("almostLinear",   { type = "bezier", points = { {0.5, 0.5},   {0.75, 1}    } })
-hl.curve("quick",          { type = "bezier", points = { {0.15, 0},    {0.1, 1}     } })
+-- Add these as completely standalone lines in your hyprland.lua
+hl.layer_rule({ match = { namespace = "wofi" }, blur = true, ignore_alpha = 0.5 }),
+hl.layer_rule({ match = { namespace = "launcher" }, blur = true, ignore_alpha = 0.5 }),
 
--- Default springs
-hl.curve("easy",           { type = "spring", mass = 1, stiffness = 238.1191, dampening = 24.21279333 })
+-- Fix for your waybar too
+hl.layer_rule({ match = { namespace = "waybar" }, blur = true, ignore_alpha = 0.5 })
 
-hl.animation({ leaf = "global",        enabled = true,  speed = 10,   bezier = "default" })
-hl.animation({ leaf = "border",        enabled = true,  speed = 5.39, bezier = "easeOutQuint" })
-hl.animation({ leaf = "windows",       enabled = true,  speed = 4.79, spring = "easy" })
-hl.animation({ leaf = "windowsIn",     enabled = true,  speed = 4.1,  spring = "easy",         style = "popin 87%" })
-hl.animation({ leaf = "windowsOut",    enabled = true,  speed = 1.49, bezier = "linear",       style = "popin 87%" })
-hl.animation({ leaf = "fadeIn",        enabled = true,  speed = 1.73, bezier = "almostLinear" })
-hl.animation({ leaf = "fadeOut",       enabled = true,  speed = 1.46, bezier = "almostLinear" })
-hl.animation({ leaf = "fade",          enabled = true,  speed = 3.03, bezier = "quick" })
-hl.animation({ leaf = "layers",        enabled = true,  speed = 3.81, bezier = "easeOutQuint" })
-hl.animation({ leaf = "layersIn",      enabled = true,  speed = 4,    bezier = "easeOutQuint", style = "fade" })
-hl.animation({ leaf = "layersOut",     enabled = true,  speed = 1.5,  bezier = "linear",       style = "fade" })
-hl.animation({ leaf = "fadeLayersIn",  enabled = true,  speed = 1.79, bezier = "almostLinear" })
-hl.animation({ leaf = "fadeLayersOut", enabled = true,  speed = 1.39, bezier = "almostLinear" })
-hl.animation({ leaf = "workspaces",    enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesIn",  enabled = true,  speed = 1.21, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "workspacesOut", enabled = true,  speed = 1.94, bezier = "almostLinear", style = "fade" })
-hl.animation({ leaf = "zoomFactor",    enabled = true,  speed = 7,    bezier = "quick" })
-
--- Ref https://wiki.hypr.land/Configuring/Basics/Workspace-Rules/
--- "Smart gaps" / "No gaps when only"
--- uncomment all if you wish to use that.
--- hl.workspace_rule({ workspace = "w[tv1]", gaps_out = 0, gaps_in = 0 })
--- hl.workspace_rule({ workspace = "f[1]",   gaps_out = 0, gaps_in = 0 })
--- hl.window_rule({
---     name  = "no-gaps-wtv1",
---     match = { float = false, workspace = "w[tv1]" },
---     border_size = 0,
---     rounding    = 0,
--- })
--- hl.window_rule({
---     name  = "no-gaps-f1",
---     match = { float = false, workspace = "f[1]" },
---     border_size = 0,
---     rounding    = 0,
--- })
-
--- See https://wiki.hypr.land/Configuring/Layouts/Dwindle-Layout/ for more
-hl.config({
-    dwindle = {
-        preserve_split = true, -- You probably want this
-    },
-})
-
--- See https://wiki.hypr.land/Configuring/Layouts/Master-Layout/ for more
-hl.config({
-    master = {
-        new_status = "master",
-    },
-})
-
--- See https://wiki.hypr.land/Configuring/Layouts/Scrolling-Layout/ for more
-hl.config({
-    scrolling = {
-        fullscreen_on_one_column = true,
-    },
-})
-
-
-hl.config({
-    misc = {
-        force_default_wallpaper = 0,    -- Set to 0 or 1 to disable the anime mascot wallpapers
-        disable_hyprland_logo   = true, -- If true disables the random hyprland logo / anime girl background. :(
-    },
 })
