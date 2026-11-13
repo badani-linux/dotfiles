@@ -46,6 +46,11 @@ hl.config({
         layout = "dwindle",
     },
 
+     dwindle = {
+        preserve_split = true,  -- Keeps window split orientations stable
+        smart_split = true,     -- Automatically scales windows correctly based on cursor position
+    },
+
     -- =============================================================================
     -- Window Decorations and Depth Shadows
     -- =============================================================================
@@ -63,8 +68,8 @@ hl.config({
         
         blur = {
             enabled = true,
-            size = 5,
-            passes = 2,
+            size = 8,
+            passes = 3,
             new_optimizations = true,
             ignore_opacity = true,
         },
@@ -91,12 +96,8 @@ hl.config({
             { name = "workspaces",   enabled = true, speed = 4.0, curve = "fluent_curve", style = "slide" },
         }
     },
-
--- Add these as completely standalone lines in your hyprland.lua
-hl.layer_rule({ match = { namespace = "wofi" }, blur = true, ignore_alpha = 0.70 }),
-hl.layer_rule({ match = { namespace = "launcher" }, blur = true, ignore_alpha = 0.70 }),
-
--- Fix for your waybar too
-hl.layer_rule({ match = { namespace = "waybar" }, blur = true, ignore_alpha = 0.5 })
-
 })
+
+hl.layer_rule({ match = { namespace = "wofi" }, blur = true, ignore_alpha = 0.70 })
+hl.layer_rule({ match = { namespace = "launcher" }, blur = true, ignore_alpha = 0.70 })
+hl.layer_rule({ match = { namespace = "waybar" }, blur = true, ignore_alpha = 0.5 })
